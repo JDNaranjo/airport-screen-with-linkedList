@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class Airport {
 	
 	private Flight first;
@@ -19,7 +16,13 @@ public class Airport {
 	}
 
 	public void setFirst(Flight first) {
-		this.first = first;
+		if(first==null) {
+			this.first = first;
+		}else {
+			Flight f = first;
+			this.first = first;
+			first.setNext(f);
+		}
 	}
 	
 	public String timeRandom() {
@@ -115,213 +118,542 @@ public class Airport {
 		return remarks;
 	}
 	
-	public Flight orderByTimeLH(Flight first) {
-		//HacerMetodo
-		return first;
-	}
-	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByTimeHL(ArrayList<Flight> flights) {
-		Flight temp;
-	    for(int I = 0; I< flights.size()-1; I++) {
-	        for(int J = 0; J < flights.size()-I-1; J++) {
-	            if(flights.get(J).compareTo(flights.get(J+1))<0) {
-	                temp = flights.get(J);
-	                flights.set(J, flights.get(J+1));
-	                flights.set(J+1, temp);
-	            }
-	        }
-	    }
-		
-		return flights;
-	}
-	
-	public Flight orderByAirlineAZ(Flight first) {
-		//HacerMetodo
-		return first;
-	}
-	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByAirlineZA(ArrayList<Flight> flights) {
-		
-		int minimum; 
-		Flight temp;
-
-        for(int I = 0; I < flights.size()-1 ; I++)  {
-             minimum = I ;
-            for(int J = I+1; J < flights.size() ; J++ ) {
-                if(flights.get(J).getAirline().compareTo(flights.get(minimum).getAirline())>0)  {
-                minimum = J ;
-                }
-             }
-            temp = flights.get(minimum);
-            flights.set(minimum, flights.get(I));
-            flights.set(I, temp);
-        }
-		
-		return flights;
-		
-	}
-	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByFlightAZ(ArrayList<Flight> flights) {
-		
-		for( int I = 0 ;I < flights.size() ; I++ ) {
-	
-		     Flight temp = flights.get(I);    
-		     int J = I;
-	         while(  J > 0  && temp.getFlight().compareTo(flights.get(J-1).getFlight()) < 0) {
-	        	 flights.set(J, flights.get(J-1));   
-		         J= J - 1;
-	
-		         }
-		     flights.set(J, temp);       
-		}  
-			
-		return flights;
-		
-	}
-	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByFlightZA(ArrayList<Flight> flights) {
-			
-			for( int I = 0 ;I < flights.size() ; I++ ) {
-		
-			     Flight temp = flights.get(I);    
-			     int J = I;
-		         while(  J > 0  && temp.getFlight().compareTo(flights.get(J-1).getFlight()) > 0) {
-		        	 flights.set(J, flights.get(J-1));   
-			         J= J - 1;
-		
-			         }
-			     flights.set(J, temp);       
-			}  
+	public void orderByTimeLH() {
+		Flight current = first;
+		while(current != null) {
+			Flight temp = current.getNext();
+			Flight min = current;
+			while(temp != null) {
+				if(temp.compareTo(min) <= 0) {
+					min = temp;
+				}
+				temp = temp.getNext();
+			}
+			boolean firstIt = false;
+			if(min != current) {
+				Flight next1 = current.getNext();
+				Flight previous1 = current.getPrev();
 				
-			return flights;
+				Flight next2 = min.getNext();
+				Flight previous2 = min.getPrev();
+				
+				if(min == current.getNext()	) {
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					current.setNext(next2);
+					current.setPrev(min);
+					if(next2 != null) next2.setPrev(current);
+					min.setNext(current);
+					min.setPrev(previous1);
+				} else {
+					if(next1 != null) next1.setPrev(min);
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					
+					min.setNext(next1);
+					min.setPrev(previous1);
+					
+					if(next2 != null) next2.setPrev(current);
+					if(previous2 != null) previous2.setNext(current);
+					
+					current.setNext(next2);
+					current.setPrev(previous2);
+				}
+				current = min;
+			}
 			
+			if(firstIt) {
+				current = first.getNext();
+			} else {
+				current = current.getNext();
+			}
+		}
+	}
+	
+	public void orderByTimeHL() {
+		Flight current = first;
+		while(current != null) {
+			Flight temp = current.getNext();
+			Flight min = current;
+			while(temp != null) {
+				if(temp.compareTo(min) >= 0) {
+					min = temp;
+				}
+				temp = temp.getNext();
+			}
+			boolean firstIt = false;
+			if(min != current) {
+				Flight next1 = current.getNext();
+				Flight previous1 = current.getPrev();
+				
+				Flight next2 = min.getNext();
+				Flight previous2 = min.getPrev();
+				
+				if(min == current.getNext()	) {
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					current.setNext(next2);
+					current.setPrev(min);
+					if(next2 != null) next2.setPrev(current);
+					min.setNext(current);
+					min.setPrev(previous1);
+				} else {
+					if(next1 != null) next1.setPrev(min);
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					
+					min.setNext(next1);
+					min.setPrev(previous1);
+					
+					if(next2 != null) next2.setPrev(current);
+					if(previous2 != null) previous2.setNext(current);
+					
+					current.setNext(next2);
+					current.setPrev(previous2);
+				}
+				current = min;
+			}
+			
+			if(firstIt) {
+				current = first.getNext();
+			} else {
+				current = current.getNext();
+			}
+		}
+	}
+	
+	public void orderByAirlineAZ() {
+		if(first != null) {
+			Flight temp = first;
+			int counter = 0;
+			
+			int size = 0;
+			while(temp != null) {
+				size++;
+				temp = temp.getNext();
+			}	
+			
+			while(temp != null) {
+				Flight current = first;
+				int counter2 = 0;
+				while(current.getNext() != null && counter2 < size-counter) {
+					if(current.getAirline().compareTo(current.getNext().getAirline())<0) {
+						if(first == current) first = current.getNext();
+						Flight next = current.getNext().getNext();
+						Flight prev = current.getPrev();
+						if(next != null) next.setPrev(current);
+						if(prev != null) prev.setNext(current.getNext());
+						current.getNext().setNext(current);
+						current.getNext().setPrev(prev);
+						current.setPrev(current.getNext());
+						current.setNext(next);
+					} else {
+						current = current.getNext();
+					}
+					counter2++;
+				}
+				counter++;
+				temp = temp.getNext();
+			}
+		}
+	}
+	
+
+	public void orderByAirlineZA() {
+		if(first != null) {
+			Flight temp = first;
+			int counter = 0;
+			
+			int size = 0;
+			while(temp != null) {
+				size++;
+				temp = temp.getNext();
+			}	
+			
+			while(temp != null) {
+				Flight current = first;
+				int counter2 = 0;
+				while(current.getNext() != null && counter2 < size-counter) {
+					if(current.getAirline().compareTo(current.getNext().getAirline())>0) {
+						if(first == current) first = current.getNext();
+						Flight next = current.getNext().getNext();
+						Flight prev = current.getPrev();
+						if(next != null) next.setPrev(current);
+						if(prev != null) prev.setNext(current.getNext());
+						current.getNext().setNext(current);
+						current.getNext().setPrev(prev);
+						current.setPrev(current.getNext());
+						current.setNext(next);
+					} else {
+						current = current.getNext();
+					}
+					counter2++;
+				}
+				counter++;
+				temp = temp.getNext();
+			}
+		}		
+	}
+	
+	public void orderByFlightAZ() {
+		if(first.getNext() != null) {
+			Flight current = first.getNext();
+			while(current != null) {
+				Flight temp = current;
+				while(temp.getPrev() != null) {
+					if(temp.getFlight().compareTo(temp.getPrev().getFlight())<0) {
+						if(temp.getPrev() == first) first = temp;
+						Flight next = temp.getNext();
+						Flight prev = temp.getPrev().getPrev();
+						if(next != null) next.setPrev(temp.getPrev());
+						if(prev != null) prev.setNext(temp);
+						temp.setNext(temp.getPrev());
+						temp.getPrev().setPrev(temp);
+						temp.getPrev().setNext(next);
+						temp.setPrev(prev);
+					} else {
+						temp = temp.getPrev();
+					}
+				}
+				current = current.getNext();
+			}
+		}
+	}
+	
+	public void orderByFlightZA() {
+		if(first.getNext() != null) {
+			Flight current = first.getNext();
+			while(current != null) {
+				Flight temp = current;
+				while(temp.getPrev() != null) {
+					if(temp.getFlight().compareTo(temp.getPrev().getFlight())>0) {
+						if(temp.getPrev() == first) first = temp;
+						Flight next = temp.getNext();
+						Flight prev = temp.getPrev().getPrev();
+						if(next != null) next.setPrev(temp.getPrev());
+						if(prev != null) prev.setNext(temp);
+						temp.setNext(temp.getPrev());
+						temp.getPrev().setPrev(temp);
+						temp.getPrev().setNext(next);
+						temp.setPrev(prev);
+					} else {
+						temp = temp.getPrev();
+					}
+				}
+				current = current.getNext();
+			}
+		}
 		}
 	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByCityAZ(ArrayList<Flight> flights) {
-		
-		Collections.sort(flights, new CityComparator());
+
+	public void orderByCityAZ() {
+		Flight current = first;
+		while(current != null) {
+			Flight temp = current.getNext();
+			Flight min = current;
+			while(temp != null) {
+				if(temp.getArriveCity().compareTo(min.getArriveCity()) <= 0) {
+					min = temp;
+				}
+				temp = temp.getNext();
+			}
+			boolean firstIt = false;
+			if(min != current) {
+				Flight next1 = current.getNext();
+				Flight previous1 = current.getPrev();
+				
+				Flight next2 = min.getNext();
+				Flight previous2 = min.getPrev();
+				
+				if(min == current.getNext()	) {
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					current.setNext(next2);
+					current.setPrev(min);
+					if(next2 != null) next2.setPrev(current);
+					min.setNext(current);
+					min.setPrev(previous1);
+				} else {
+					if(next1 != null) next1.setPrev(min);
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					
+					min.setNext(next1);
+					min.setPrev(previous1);
+					
+					if(next2 != null) next2.setPrev(current);
+					if(previous2 != null) previous2.setNext(current);
+					
+					current.setNext(next2);
+					current.setPrev(previous2);
+				}
+				current = min;
+			}
 			
-		return flights;
+			if(firstIt) {
+				current = first.getNext();
+			} else {
+				current = current.getNext();
+			}
+		}
 		
 	}
 	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByCityZA(ArrayList<Flight> flights) {
-		
-		for( int I = 0 ;I < flights.size() ; I++ ) {
+	public void orderByCityZA() {
+		Flight current = first;
+		while(current != null) {
+			Flight temp = current.getNext();
+			Flight min = current;
+			while(temp != null) {
+				if(temp.getArriveCity().compareTo(min.getArriveCity()) >= 0) {
+					min = temp;
+				}
+				temp = temp.getNext();
+			}
+			boolean firstIt = false;
+			if(min != current) {
+				Flight next1 = current.getNext();
+				Flight previous1 = current.getPrev();
+				
+				Flight next2 = min.getNext();
+				Flight previous2 = min.getPrev();
+				
+				if(min == current.getNext()	) {
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					current.setNext(next2);
+					current.setPrev(min);
+					if(next2 != null) next2.setPrev(current);
+					min.setNext(current);
+					min.setPrev(previous1);
+				} else {
+					if(next1 != null) next1.setPrev(min);
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					
+					min.setNext(next1);
+					min.setPrev(previous1);
+					
+					if(next2 != null) next2.setPrev(current);
+					if(previous2 != null) previous2.setNext(current);
+					
+					current.setNext(next2);
+					current.setPrev(previous2);
+				}
+				current = min;
+			}
 			
-		     Flight temp = flights.get(I);    
-		     int J = I;
-	        while(  J > 0  && temp.getArriveCity().compareTo(flights.get(J-1).getArriveCity()) > 0) {
-	       	 flights.set(J, flights.get(J-1));   
-		         J= J - 1;
+			if(firstIt) {
+				current = first.getNext();
+			} else {
+				current = current.getNext();
+			}
+		}
+	}
+
+	public void orderByTerminalLH() {
+		if(first != null) {
+			Flight temp = first;
+			int counter = 0;
+			
+			int size = 0;
+			while(temp != null) {
+				size++;
+				temp = temp.getNext();
+			}	
+			
+			while(temp != null) {
+				Flight current = first;
+				int counter2 = 0;
+				while(current.getNext() != null && counter2 < size-counter) {
+					if(current.getTerminal().compareTo(current.getNext().getTerminal())<0) {
+						if(first == current) first = current.getNext();
+						Flight next = current.getNext().getNext();
+						Flight prev = current.getPrev();
+						if(next != null) next.setPrev(current);
+						if(prev != null) prev.setNext(current.getNext());
+						current.getNext().setNext(current);
+						current.getNext().setPrev(prev);
+						current.setPrev(current.getNext());
+						current.setNext(next);
+					} else {
+						current = current.getNext();
+					}
+					counter2++;
+				}
+				counter++;
+				temp = temp.getNext();
+			}
+		}
+	}
 	
-		         }
-		     flights.set(J, temp);       
-		}  
+	public void orderByTerminalHL() {
+		if(first != null) {
+			Flight temp = first;
+			int counter = 0;
 			
-		return flights;
+			int size = 0;
+			while(temp != null) {
+				size++;
+				temp = temp.getNext();
+			}	
+			
+			while(temp != null) {
+				Flight current = first;
+				int counter2 = 0;
+				while(current.getNext() != null && counter2 < size-counter) {
+					if(current.getTerminal().compareTo(current.getNext().getTerminal())>0) {
+						if(first == current) first = current.getNext();
+						Flight next = current.getNext().getNext();
+						Flight prev = current.getPrev();
+						if(next != null) next.setPrev(current);
+						if(prev != null) prev.setNext(current.getNext());
+						current.getNext().setNext(current);
+						current.getNext().setPrev(prev);
+						current.setPrev(current.getNext());
+						current.setNext(next);
+					} else {
+						current = current.getNext();
+					}
+					counter2++;
+				}
+				counter++;
+				temp = temp.getNext();
+			}
+		}
+	}
+	
+	public void orderByGateLH() {
+		if(first.getNext() != null) {
+			Flight current = first.getNext();
+			while(current != null) {
+				Flight temp = current;
+				while(temp.getPrev() != null) {
+					if(temp.getGate().compareTo(temp.getPrev().getGate())<0) {
+						if(temp.getPrev() == first) first = temp;
+						Flight next = temp.getNext();
+						Flight prev = temp.getPrev().getPrev();
+						if(next != null) next.setPrev(temp.getPrev());
+						if(prev != null) prev.setNext(temp);
+						temp.setNext(temp.getPrev());
+						temp.getPrev().setPrev(temp);
+						temp.getPrev().setNext(next);
+						temp.setPrev(prev);
+					} else {
+						temp = temp.getPrev();
+					}
+				}
+				current = current.getNext();
+			}
+		}
 		
 	}
 	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByTerminalLH(ArrayList<Flight> flights) {
-		
-		for( int I = 0 ;I < flights.size() ; I++ ) {
-			
-		     Flight temp = flights.get(I);    
-		     int J = I;
-	        while(  J > 0  && temp.getTerminal().compareTo(flights.get(J-1).getTerminal()) < 0) {
-	       	 flights.set(J, flights.get(J-1));   
-		         J= J - 1;
-	
-		         }
-		     flights.set(J, temp);       
-		}  
-			
-		return flights;
-		
+	public void orderByGateHL() {
+		if(first.getNext() != null) {
+			Flight current = first.getNext();
+			while(current != null) {
+				Flight temp = current;
+				while(temp.getPrev() != null) {
+					if(temp.getGate().compareTo(temp.getPrev().getGate())>0) {
+						if(temp.getPrev() == first) first = temp;
+						Flight next = temp.getNext();
+						Flight prev = temp.getPrev().getPrev();
+						if(next != null) next.setPrev(temp.getPrev());
+						if(prev != null) prev.setNext(temp);
+						temp.setNext(temp.getPrev());
+						temp.getPrev().setPrev(temp);
+						temp.getPrev().setNext(next);
+						temp.setPrev(prev);
+					} else {
+						temp = temp.getPrev();
+					}
+				}
+				current = current.getNext();
+			}
+		}
 	}
 	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByTerminalHL(ArrayList<Flight> flights) {
-		
-		for( int I = 0 ;I < flights.size() ; I++ ) {
+	public void orderByRemarks() {
+		Flight current = first;
+		while(current != null) {
+			Flight temp = current.getNext();
+			Flight min = current;
+			while(temp != null) {
+				if(temp.getRemarks().compareTo(min.getRemarks()) <= 0) {
+					min = temp;
+				}
+				temp = temp.getNext();
+			}
+			boolean firstIt = false;
+			if(min != current) {
+				Flight next1 = current.getNext();
+				Flight previous1 = current.getPrev();
+				
+				Flight next2 = min.getNext();
+				Flight previous2 = min.getPrev();
+				
+				if(min == current.getNext()	) {
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					current.setNext(next2);
+					current.setPrev(min);
+					if(next2 != null) next2.setPrev(current);
+					min.setNext(current);
+					min.setPrev(previous1);
+				} else {
+					if(next1 != null) next1.setPrev(min);
+					if(previous1 != null) previous1.setNext(min);
+					else {
+						first = min;
+						firstIt = true;
+					}
+					
+					min.setNext(next1);
+					min.setPrev(previous1);
+					
+					if(next2 != null) next2.setPrev(current);
+					if(previous2 != null) previous2.setNext(current);
+					
+					current.setNext(next2);
+					current.setPrev(previous2);
+				}
+				current = min;
+			}
 			
-		     Flight temp = flights.get(I);    
-		     int J = I;
-	        while(  J > 0  && temp.getTerminal().compareTo(flights.get(J-1).getTerminal()) > 0) {
-	       	 flights.set(J, flights.get(J-1));   
-		         J= J - 1;
-	
-		         }
-		     flights.set(J, temp);       
-		}  
-			
-		return flights;
-		
-	}
-	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByGateLH(ArrayList<Flight> flights) {
-		
-		for( int I = 0 ;I < flights.size() ; I++ ) {
-			
-		     Flight temp = flights.get(I);    
-		     int J = I;
-	        while(  J > 0  && temp.getGate().compareTo(flights.get(J-1).getGate()) < 0) {
-	       	 flights.set(J, flights.get(J-1));   
-		         J= J - 1;
-	
-		         }
-		     flights.set(J, temp);       
-		}  
-			
-		return flights;
-		
-	}
-	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByGateHL(ArrayList<Flight> flights) {
-		
-		for( int I = 0 ;I < flights.size() ; I++ ) {
-			
-		     Flight temp = flights.get(I);    
-		     int J = I;
-	        while(  J > 0  && temp.getGate().compareTo(flights.get(J-1).getGate()) > 0) {
-	       	 flights.set(J, flights.get(J-1));   
-		         J= J - 1;
-	
-		         }
-		     flights.set(J, temp);       
-		}  
-			
-		return flights;
-		
-	}
-	
-	//ArreglarMetodo
-	public ArrayList<Flight> orderByRemarks(ArrayList<Flight> flights) {
-		
-		for( int I = 0 ;I < flights.size() ; I++ ) {
-			
-		     Flight temp = flights.get(I);    
-		     int J = I;
-	        while(  J > 0  && temp.getRemarks().compareTo(flights.get(J-1).getRemarks()) > 0) {
-	       	 flights.set(J, flights.get(J-1));   
-		         J= J - 1;
-	
-		         }
-		     flights.set(J, temp);       
-		}  
-			
-		return flights;
-		
+			if(firstIt) {
+				current = first.getNext();
+			} else {
+				current = current.getNext();
+			}
+		}
 	}
 
 	public int linealSearchByTime(String time) {
@@ -344,12 +676,12 @@ public class Airport {
 		return -1;
 	}
 
-	public int binarySearchByTerminal(String terminal) {
+	public int linealSearchByTerminal(String terminal) {
 		// Hacer Busqueda
 		return -1;
 	}
 
-	public int binarySearchByGate(String gate) {
+	public int linealSearchByGate(String gate) {
 		// Hacer Busqueda
 		return -1;
 	}

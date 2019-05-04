@@ -27,15 +27,16 @@ public class Flight implements Comparable<Flight>{
 	public Flight getNext() {
 		return next;
 	}
+	
 	public void setNext(Flight flight) {
-		// Hacer Metodo
+		this.next = flight;
 	}
 	
 	public Flight getPrev() {
 		return prev;
 	}
 	public void setPrev(Flight flight) {
-		// Hacer Metodo
+		this.prev = flight;
 	}
 	
 	public String getTime() {

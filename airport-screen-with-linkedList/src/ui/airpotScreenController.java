@@ -135,7 +135,7 @@ public class airpotScreenController {
 	    	System.out.println(""+time+" - "+airline+" - "+flightNumber+" - "+cityTo+" - "+terminal+" - "
 	    			+gate+" - "+remarks+" - ");
     	}
-    	//airport.orderByTimeLH();
+    	airport.orderByTimeLH();
     	tableView.setItems(data);
     	actualTime = System.currentTimeMillis()-actualTime;
     	timeCurrentLabel.setText(""+actualTime);
@@ -286,12 +286,14 @@ public class airpotScreenController {
     void timeSorting(ActionEvent event) {
     	data.clear();
     	double actualTime = System.currentTimeMillis();
-    	airport.orderByTimeLH(airport.getFlights());
+    	airport.orderByTimeLH();
     	System.out.println("--------------------------------------");
-    	for (int i = 0; i < Integer.parseInt(textFieldFlights.getText()); i++) {
-    		data.add(airport.getFlights().get(i));
-    		System.out.println(""+airport.getFlights().get(i).getTime()+" - "+airport.getFlights().get(i).getAirline()+" - "+airport.getFlights().get(i).getFlight()+" - "+airport.getFlights().get(i).getArriveCity()+" - "+airport.getFlights().get(i).getTerminal()+" - "
-	    			+airport.getFlights().get(i).getGate()+" - "+airport.getFlights().get(i).getRemarks());
+    	Flight temp = airport.getFirst();
+    	while(temp!= null) {
+    		data.add(temp);
+    		System.out.println(""+temp.getTime()+" - "+temp.getAirline()+" - "+temp.getFlight()+" - "+temp.getArriveCity()+" - "+temp.getTerminal()+" - "
+	    			+temp.getGate()+" - "+temp.getRemarks());
+    		temp = temp.getNext();
     	}
     	tableView.setItems(data);
     	actualTime = System.currentTimeMillis()-actualTime;
@@ -302,12 +304,14 @@ public class airpotScreenController {
     void airlineSorting(ActionEvent event) {
     	data.clear();
     	double actualTime = System.currentTimeMillis();
-    	airport.orderByAirlineAZ(airport.getFlights());
+    	airport.orderByAirlineAZ();
     	System.out.println("--------------------------------------");
-    	for (int i = 0; i < Integer.parseInt(textFieldFlights.getText()); i++) {
-    		data.add(airport.getFlights().get(i));
-    		System.out.println(""+airport.getFlights().get(i).getTime()+" - "+airport.getFlights().get(i).getAirline()+" - "+airport.getFlights().get(i).getFlight()+" - "+airport.getFlights().get(i).getArriveCity()+" - "+airport.getFlights().get(i).getTerminal()+" - "
-	    			+airport.getFlights().get(i).getGate()+" - "+airport.getFlights().get(i).getRemarks());
+    	Flight temp = airport.getFirst();
+    	while(temp!= null) {
+    		data.add(temp);
+    		System.out.println(""+temp.getTime()+" - "+temp.getAirline()+" - "+temp.getFlight()+" - "+temp.getArriveCity()+" - "+temp.getTerminal()+" - "
+	    			+temp.getGate()+" - "+temp.getRemarks());
+    		temp = temp.getNext();
     	}
     	tableView.setItems(data);
     	actualTime = System.currentTimeMillis()-actualTime;
@@ -318,12 +322,14 @@ public class airpotScreenController {
     void flightSorting(ActionEvent event) {
     	data.clear();
     	double actualTime = System.currentTimeMillis();
-    	airport.orderByFlightAZ(airport.getFlights());
+    	airport.orderByFlightAZ();
     	System.out.println("--------------------------------------");
-    	for (int i = 0; i < Integer.parseInt(textFieldFlights.getText()); i++) {
-    		data.add(airport.getFlights().get(i));
-    		System.out.println(""+airport.getFlights().get(i).getTime()+" - "+airport.getFlights().get(i).getAirline()+" - "+airport.getFlights().get(i).getFlight()+" - "+airport.getFlights().get(i).getArriveCity()+" - "+airport.getFlights().get(i).getTerminal()+" - "
-	    			+airport.getFlights().get(i).getGate()+" - "+airport.getFlights().get(i).getRemarks());
+    	Flight temp = airport.getFirst();
+    	while(temp!= null) {
+    		data.add(temp);
+    		System.out.println(""+temp.getTime()+" - "+temp.getAirline()+" - "+temp.getFlight()+" - "+temp.getArriveCity()+" - "+temp.getTerminal()+" - "
+	    			+temp.getGate()+" - "+temp.getRemarks());
+    		temp = temp.getNext();
     	}
     	tableView.setItems(data);
     	actualTime = System.currentTimeMillis()-actualTime;
@@ -334,12 +340,14 @@ public class airpotScreenController {
     void citySorting(ActionEvent event) {
     	data.clear();
     	double actualTime = System.currentTimeMillis();
-    	airport.orderByCityAZ(airport.getFlights());
+    	airport.orderByCityAZ();
     	System.out.println("--------------------------------------");
-    	for (int i = 0; i < Integer.parseInt(textFieldFlights.getText()); i++) {
-    		data.add(airport.getFlights().get(i));
-    		System.out.println(""+airport.getFlights().get(i).getTime()+" - "+airport.getFlights().get(i).getAirline()+" - "+airport.getFlights().get(i).getFlight()+" - "+airport.getFlights().get(i).getArriveCity()+" - "+airport.getFlights().get(i).getTerminal()+" - "
-	    			+airport.getFlights().get(i).getGate()+" - "+airport.getFlights().get(i).getRemarks());
+    	Flight temp = airport.getFirst();
+    	while(temp!= null) {
+    		data.add(temp);
+    		System.out.println(""+temp.getTime()+" - "+temp.getAirline()+" - "+temp.getFlight()+" - "+temp.getArriveCity()+" - "+temp.getTerminal()+" - "
+	    			+temp.getGate()+" - "+temp.getRemarks());
+    		temp = temp.getNext();
     	}
     	tableView.setItems(data);
     	actualTime = System.currentTimeMillis()-actualTime;
@@ -350,12 +358,14 @@ public class airpotScreenController {
     void terminalSorting(ActionEvent event) {
     	data.clear();
     	double actualTime = System.currentTimeMillis();
-    	airport.orderByTerminalLH(airport.getFlights());
+    	airport.orderByTerminalLH();
     	System.out.println("--------------------------------------");
-    	for (int i = 0; i < Integer.parseInt(textFieldFlights.getText()); i++) {
-    		data.add(airport.getFlights().get(i));
-    		System.out.println(""+airport.getFlights().get(i).getTime()+" - "+airport.getFlights().get(i).getAirline()+" - "+airport.getFlights().get(i).getFlight()+" - "+airport.getFlights().get(i).getArriveCity()+" - "+airport.getFlights().get(i).getTerminal()+" - "
-	    			+airport.getFlights().get(i).getGate()+" - "+airport.getFlights().get(i).getRemarks());
+    	Flight temp = airport.getFirst();
+    	while(temp!= null) {
+    		data.add(temp);
+    		System.out.println(""+temp.getTime()+" - "+temp.getAirline()+" - "+temp.getFlight()+" - "+temp.getArriveCity()+" - "+temp.getTerminal()+" - "
+	    			+temp.getGate()+" - "+temp.getRemarks());
+    		temp = temp.getNext();
     	}
     	tableView.setItems(data);
     	actualTime = System.currentTimeMillis()-actualTime;
@@ -366,12 +376,14 @@ public class airpotScreenController {
     void gateSorting(ActionEvent event) {
     	data.clear();
     	double actualTime = System.currentTimeMillis();
-    	airport.orderByGateLH(airport.getFlights());
+    	airport.orderByGateLH();
     	System.out.println("--------------------------------------");
-    	for (int i = 0; i < Integer.parseInt(textFieldFlights.getText()); i++) {
-    		data.add(airport.getFlights().get(i));
-    		System.out.println(""+airport.getFlights().get(i).getTime()+" - "+airport.getFlights().get(i).getAirline()+" - "+airport.getFlights().get(i).getFlight()+" - "+airport.getFlights().get(i).getArriveCity()+" - "+airport.getFlights().get(i).getTerminal()+" - "
-	    			+airport.getFlights().get(i).getGate()+" - "+airport.getFlights().get(i).getRemarks());
+    	Flight temp = airport.getFirst();
+    	while(temp!= null) {
+    		data.add(temp);
+    		System.out.println(""+temp.getTime()+" - "+temp.getAirline()+" - "+temp.getFlight()+" - "+temp.getArriveCity()+" - "+temp.getTerminal()+" - "
+	    			+temp.getGate()+" - "+temp.getRemarks());
+    		temp = temp.getNext();
     	}
     	tableView.setItems(data);
     	actualTime = System.currentTimeMillis()-actualTime;
