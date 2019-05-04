@@ -69,13 +69,13 @@
    <right>
       <AnchorPane prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="searchTxtFiled" layoutX="27.0" layoutY="17.0" promptText="Search by:" />
-            <Button fx:id="timeSearchButton" layoutX="27.0" layoutY="51.0" mnemonicParsing="false" onAction="#timeSearch" text="Time" />
-            <Button fx:id="airlineSearchButton" layoutX="125.0" layoutY="51.0" mnemonicParsing="false" onAction="#airlineSearch" text="Airline" />
-            <Button fx:id="flightSearchButton" layoutX="27.0" layoutY="87.0" mnemonicParsing="false" onAction="#flightSearch" text="Flight" />
-            <Button fx:id="citySearchButton" layoutX="138.0" layoutY="87.0" mnemonicParsing="false" onAction="#citySearch" text="City" />
-            <Button fx:id="terminalSearchButton" layoutX="27.0" layoutY="122.0" mnemonicParsing="false" onAction="#terminalSearch" text="Terminal" />
-            <Button fx:id="gateSearchButton" layoutX="135.0" layoutY="122.0" mnemonicParsing="false" onAction="#gateSearch" text="Gate" />
+            <TextField fx:id="searchTxtFiled" layoutX="27.0" layoutY="17.0" prefHeight="25.0" prefWidth="158.0" promptText="Search by:" />
+            <Button fx:id="timeSearchButton" layoutX="27.0" layoutY="51.0" mnemonicParsing="false" onAction="#timeSearch" prefHeight="25.0" prefWidth="62.0" text="Time" />
+            <Button fx:id="airlineSearchButton" layoutX="125.0" layoutY="51.0" mnemonicParsing="false" onAction="#airlineSearch" prefWidth="62.0" text="Airline" />
+            <Button fx:id="flightSearchButton" layoutX="27.0" layoutY="87.0" mnemonicParsing="false" onAction="#flightSearch" prefWidth="62.0" text="Flight" />
+            <Button fx:id="citySearchButton" layoutX="125.0" layoutY="87.0" mnemonicParsing="false" onAction="#citySearch" prefWidth="62.0" text="City" />
+            <Button fx:id="terminalSearchButton" layoutX="27.0" layoutY="122.0" mnemonicParsing="false" onAction="#terminalSearch" prefHeight="25.0" prefWidth="62.0" text="Terminal" />
+            <Button fx:id="gateSearchButton" layoutX="125.0" layoutY="122.0" mnemonicParsing="false" onAction="#gateSearch" prefWidth="62.0" text="Gate" />
             <Label fx:id="canNotLabel" layoutX="55.0" layoutY="156.0" text="Can't Find Flight" textFill="#ff9f00">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -86,12 +86,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="timeSortingButton" layoutX="27.0" layoutY="242.0" mnemonicParsing="false" onAction="#timeSorting" text="Time" />
-            <Button fx:id="airlineSortingButton" layoutX="125.0" layoutY="242.0" mnemonicParsing="false" onAction="#airlineSorting" text="Airline" />
-            <Button fx:id="flightSortingButton" layoutX="27.0" layoutY="278.0" mnemonicParsing="false" onAction="#flightSorting" text="Flight" />
-            <Button fx:id="citySortingButton" layoutX="138.0" layoutY="278.0" mnemonicParsing="false" onAction="#citySorting" text="City" />
-            <Button fx:id="terminalSortingButton" layoutX="27.0" layoutY="313.0" mnemonicParsing="false" onAction="#terminalSorting" text="Terminal" />
-            <Button fx:id="gateSortingButton" layoutX="135.0" layoutY="313.0" mnemonicParsing="false" onAction="#gateSorting" text="Gate" />
+            <Button fx:id="timeSortingButton" layoutX="27.0" layoutY="242.0" mnemonicParsing="false" onAction="#timeSorting" prefWidth="62.0" text="Time" />
+            <Button fx:id="airlineSortingButton" layoutX="125.0" layoutY="242.0" mnemonicParsing="false" onAction="#airlineSorting" prefWidth="62.0" text="Airline" />
+            <Button fx:id="flightSortingButton" layoutX="27.0" layoutY="278.0" mnemonicParsing="false" onAction="#flightSorting" prefWidth="62.0" text="Flight" />
+            <Button fx:id="citySortingButton" layoutX="125.0" layoutY="278.0" mnemonicParsing="false" onAction="#citySorting" prefWidth="62.0" text="City" />
+            <Button fx:id="terminalSortingButton" layoutX="27.0" layoutY="313.0" mnemonicParsing="false" onAction="#terminalSorting" prefWidth="62.0" text="Terminal" />
+            <Button fx:id="gateSortingButton" layoutX="125.0" layoutY="313.0" mnemonicParsing="false" onAction="#gateSorting" prefWidth="62.0" text="Gate" />
             <Label fx:id="canNotLabel1" layoutX="73.0" layoutY="214.0" text="Order by:" textFill="#ff9f00">
                <font>
                   <Font name="System Bold" size="12.0" />

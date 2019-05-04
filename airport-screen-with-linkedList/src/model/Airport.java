@@ -16,13 +16,7 @@ public class Airport {
 	}
 
 	public void setFirst(Flight first) {
-		if(first==null) {
-			this.first = first;
-		}else {
-			Flight f = first;
-			this.first = first;
-			first.setNext(f);
-		}
+		this.first = first;
 	}
 	
 	public String timeRandom() {
@@ -98,8 +92,13 @@ public class Airport {
 	public String gateRandom() {
 		int gateNumber=(int)(Math.random()*30-1);
 		gateNumber++;
+		String gate="";
+		if(gateNumber<10) {
+			gate="0"+gateNumber;
+		}else {
+			gate=""+gateNumber;
+		}
 		
-		String gate=""+gateNumber;
 		
 		return gate;
 	}
@@ -235,37 +234,26 @@ public class Airport {
 	}
 	
 	public void orderByAirlineAZ() {
-		if(first != null) {
-			Flight temp = first;
-			int counter = 0;
-			
-			int size = 0;
-			while(temp != null) {
-				size++;
-				temp = temp.getNext();
-			}	
-			
-			while(temp != null) {
-				Flight current = first;
-				int counter2 = 0;
-				while(current.getNext() != null && counter2 < size-counter) {
-					if(current.getAirline().compareTo(current.getNext().getAirline())<0) {
-						if(first == current) first = current.getNext();
-						Flight next = current.getNext().getNext();
-						Flight prev = current.getPrev();
-						if(next != null) next.setPrev(current);
-						if(prev != null) prev.setNext(current.getNext());
-						current.getNext().setNext(current);
-						current.getNext().setPrev(prev);
-						current.setPrev(current.getNext());
-						current.setNext(next);
+		if(first.getNext() != null) {
+			Flight current = first.getNext();
+			while(current != null) {
+				Flight temp = current;
+				while(temp.getPrev() != null) {
+					if(temp.getFlight().compareTo(temp.getPrev().getFlight())<0) {
+						if(temp.getPrev() == first) first = temp;
+						Flight next = temp.getNext();
+						Flight prev = temp.getPrev().getPrev();
+						if(next != null) next.setPrev(temp.getPrev());
+						if(prev != null) prev.setNext(temp);
+						temp.setNext(temp.getPrev());
+						temp.getPrev().setPrev(temp);
+						temp.getPrev().setNext(next);
+						temp.setPrev(prev);
 					} else {
-						current = current.getNext();
+						temp = temp.getPrev();
 					}
-					counter2++;
 				}
-				counter++;
-				temp = temp.getNext();
+				current = current.getNext();
 			}
 		}
 	}
@@ -476,37 +464,26 @@ public class Airport {
 	}
 
 	public void orderByTerminalLH() {
-		if(first != null) {
-			Flight temp = first;
-			int counter = 0;
-			
-			int size = 0;
-			while(temp != null) {
-				size++;
-				temp = temp.getNext();
-			}	
-			
-			while(temp != null) {
-				Flight current = first;
-				int counter2 = 0;
-				while(current.getNext() != null && counter2 < size-counter) {
-					if(current.getTerminal().compareTo(current.getNext().getTerminal())<0) {
-						if(first == current) first = current.getNext();
-						Flight next = current.getNext().getNext();
-						Flight prev = current.getPrev();
-						if(next != null) next.setPrev(current);
-						if(prev != null) prev.setNext(current.getNext());
-						current.getNext().setNext(current);
-						current.getNext().setPrev(prev);
-						current.setPrev(current.getNext());
-						current.setNext(next);
+		if(first.getNext() != null) {
+			Flight current = first.getNext();
+			while(current != null) {
+				Flight temp = current;
+				while(temp.getPrev() != null) {
+					if(temp.getTerminal().compareTo(temp.getPrev().getTerminal())<0) {
+						if(temp.getPrev() == first) first = temp;
+						Flight next = temp.getNext();
+						Flight prev = temp.getPrev().getPrev();
+						if(next != null) next.setPrev(temp.getPrev());
+						if(prev != null) prev.setNext(temp);
+						temp.setNext(temp.getPrev());
+						temp.getPrev().setPrev(temp);
+						temp.getPrev().setNext(next);
+						temp.setPrev(prev);
 					} else {
-						current = current.getNext();
+						temp = temp.getPrev();
 					}
-					counter2++;
 				}
-				counter++;
-				temp = temp.getNext();
+				current = current.getNext();
 			}
 		}
 	}
@@ -656,34 +633,76 @@ public class Airport {
 		}
 	}
 
-	public int linealSearchByTime(String time) {
-		// Hacer Busqueda
-		return -1;
+	public Flight linealSearchByTime(String time) {
+		Flight current = first;
+		while(current!=null) {
+			if (current.compareTo(time)==0) {
+				return current;
+			}else {
+				current = current.getNext();
+			}
+		}
+		return null;
 	}
 
-	public int linealSearchByAirline(String airline) {
-		// Hacer Busqueda
-		return -1;
+	public Flight linealSearchByAirline(String airline) {
+		Flight current = first;
+		while(current!=null) {
+			if (current.getAirline().compareTo(airline)==0) {
+				return current;
+			}else {
+				current = current.getNext();
+			}
+		}
+		return null;
 	}
 
-	public int linealSearchByFlight(String flight) {
-		// Hacer Busqueda
-		return -1;
+	public Flight linealSearchByFlight(String flight) {
+		Flight current = first;
+		while(current!=null) {
+			if (current.getFlight().compareTo(flight)==0) {
+				return current;
+			}else {
+				current = current.getNext();
+			}
+		}
+		return null;
 	}
 
-	public int linealSearchByCity(String city) {
-		// Hacer Busqueda
-		return -1;
+	public Flight linealSearchByCity(String city) {
+		Flight current = first;
+		while(current!=null) {
+			if (current.getArriveCity().compareTo(city)==0) {
+				return current;
+			}else {
+				current = current.getNext();
+			}
+		}
+		return null;
 	}
 
-	public int linealSearchByTerminal(String terminal) {
-		// Hacer Busqueda
-		return -1;
+	public Flight linealSearchByTerminal(String terminal) {
+		Flight current = first;
+		while(current!=null) {
+			if (current.getTerminal().compareTo(terminal)==0) {
+				return current;
+			}else {
+				current = current.getNext();
+			}
+		}
+		return null;
 	}
 
-	public int linealSearchByGate(String gate) {
-		// Hacer Busqueda
-		return -1;
+	public Flight linealSearchByGate(String gate) {
+		Flight current = first;
+		while(current!=null) {
+			if (current.getGate().compareTo(gate)==0) {
+				return current;
+			}else {
+				current = current.getNext();
+			}
+		}
+		return null;
 	}
 	
 }
